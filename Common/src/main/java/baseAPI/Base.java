@@ -22,38 +22,36 @@ public class Base {
 
 
     public static AppiumDriver driver = null;
-    public String app = null;
     public String OS = null;
+    public String deviceName = null;
     public String deviceType = null;
     public String appType = null;
     public String version = null;
-
+    public File appDirectory = null;
     public File file = null;
     public File findApp = null;
     public DesiredCapabilities cap = null;
 
-    @Parameters
+    @Parameters ({"OS","appType","deviceType","deviceName","version"})
     @BeforeMethod
-    public void setUp(String app, String device, String deviceType, String version)throws IOException{
+    public void setUp(String OS,String appType, String deviceType, String deviceName, String version)throws IOException{
 
-        if(app.contains("ios")){
-            //TODO IOS
-            if(OS.contains("iPhone")){
-
-                if(deviceType.contains("RealDevice")){
-                    //TODO Real Device Phone
+        if(OS.equalsIgnoreCase("ios")){
+            if(appType.contains("iPhone")){
+                appDirectory = new File("IOS/src/app");
+                findApp = new File(appDirectory,"UICatalog6.1.app.zip");
+                if(deviceType.equalsIgnoreCase("RealDevice")){
                     cap = new DesiredCapabilities();
-                    cap.setCapability(MobileCapabilityType.DEVICE_NAME, deviceType);
+                    cap.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
                     cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.IOS);
                     cap.setCapability(MobileCapabilityType.PLATFORM_VERSION, version);
                     cap.setCapability(MobileCapabilityType.APP, findApp.getAbsolutePath());
                     driver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), cap);
                     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
-                }else if (deviceType.contains("iPhone Simulator")){
-                    //TODO Real Device iPhone Simulator
+                }else if (deviceType.equalsIgnoreCase("Simulator")){
                     cap = new DesiredCapabilities();
-                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,"iPhone Simulator");
+                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,deviceName);
                     cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.IOS);
                     cap.setCapability(MobileCapabilityType.PLATFORM_VERSION, version);
                     cap.setCapability(MobileCapabilityType.APP, findApp.getAbsolutePath());
@@ -62,19 +60,19 @@ public class Base {
                 }
 
 
-            }else if(device.contains("iPad")){
+            }else if(appType.equalsIgnoreCase("iPad")){
                 if(deviceType.contains("RealDevice")){
                     cap = new DesiredCapabilities();
-                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,"iPad");
+                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,deviceName);
                     cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.IOS);
                     cap.setCapability(MobileCapabilityType.PLATFORM_VERSION, version);
                     cap.setCapability(MobileCapabilityType.APP, findApp.getAbsolutePath());
                     driver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), cap);
                     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
-                }else if (deviceType.contains("iPad Simulator")){
+                }else if (deviceType.equalsIgnoreCase("Simulator")){
                     cap = new DesiredCapabilities();
-                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,"iPad Simulator");
+                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,deviceName);
                     cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.IOS);
                     cap.setCapability(MobileCapabilityType.PLATFORM_VERSION, version);
                     cap.setCapability(MobileCapabilityType.APP, findApp.getAbsolutePath());
@@ -84,22 +82,22 @@ public class Base {
                 }
             }
 
-        }else if(app.contains("Android")){
+        }else if(OS.contains("Android")){
             //TODO Android
             if(OS.contains("Phone")){
-                if(deviceType.contains("RealDevice")){
+                if(deviceType.equalsIgnoreCase("RealDevice")){
                     cap = new DesiredCapabilities();
-                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,"Android Phone");
+                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,deviceName);
                     cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
                     cap.setCapability(MobileCapabilityType.PLATFORM_VERSION, version);
                     cap.setCapability(MobileCapabilityType.APP, findApp.getAbsolutePath());
                     driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), cap);
                     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
-                }else if (deviceType.contains("Phone Emulator")){
+                }else if (deviceType.equalsIgnoreCase("Emulator")){
 
                     cap = new DesiredCapabilities();
-                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,"Android Phone Emulator");
+                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,deviceName);
                     cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
                     cap.setCapability(MobileCapabilityType.PLATFORM_VERSION, version);
                     cap.setCapability(MobileCapabilityType.APP, findApp.getAbsolutePath());
@@ -107,20 +105,20 @@ public class Base {
                     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                 }
 
-            }else if(OS.contains("Tablets")){
-                if(deviceType.contains("RealDevice")){
+            }else if(OS.equalsIgnoreCase("Tablets")){
+                if(deviceType.equalsIgnoreCase("RealDevice")){
                     cap = new DesiredCapabilities();
-                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,"Android Tablets");
+                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,deviceName);
                     cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
                     cap.setCapability(MobileCapabilityType.PLATFORM_VERSION, version);
                     cap.setCapability(MobileCapabilityType.APP, findApp.getAbsolutePath());
                     driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), cap);
                     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
-                }else if (deviceType.contains("Tablets Emulator")){
+                }else if (deviceType.equalsIgnoreCase("Emulator")){
 
                     cap = new DesiredCapabilities();
-                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,"Android Tablets Emulator");
+                    cap.setCapability(MobileCapabilityType.DEVICE_NAME,deviceName);
                     cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
                     cap.setCapability(MobileCapabilityType.PLATFORM_VERSION, version);
                     cap.setCapability(MobileCapabilityType.APP, findApp.getAbsolutePath());

@@ -11,5 +11,13 @@
 
     <artifactId>IOS</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>Mobile-Automation</groupId>
+            <artifactId>Common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
