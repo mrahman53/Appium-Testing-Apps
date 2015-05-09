@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="iOS test suite on iPhone Simulator">
 
-    <parameter name="OS" value="iOS"/>
+    <parameter name="OS" value="ios"/>
     <parameter name="appType" value="iPhone"/>
     <parameter name="deviceType" value="Simulator"/>
     <parameter name="deviceName" value="iPhone 6"/>
